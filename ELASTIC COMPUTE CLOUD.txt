@@ -1,0 +1,126 @@
+EC2 ==>> ECC ==>> Elastic  compute cloud.
+
+
+>> Amazon Elastic Compute Cloud provides scalable computing capacity in the AWS cloud.
+>> Using Amazon EC2 eliminates your need to invest in hardware up front.
+>> so we can develop and deploy applications faster. 
+
+
+>> EC2 using as a Computer, machine, storage box, PC, Server,etc....  
+>> As per AWS terminalogy we can call it as 'Instance'.
+
+
+
+>> As a new AWS user we need to make this options for better experience.
+
+ 1: Login to AWS  
+ 2: Choose region which is nearestone , as per india region chose 'Asia pacific - Mumbai'.
+
+>> for lanching EC2 machine we have seven step process.
+
+navigation for EC2:-
+
+  services ==>> under compute service ==>> EC2. ( lanch instance ).
+
+     
+      Note:- Select free tier eligible.
+
+
+Example 1:- Launch windows instnace.
+
+
+	Step 1 == Select AMI(Amazon Machine Image) -->> select windows server.
+
+	Step 2 == configure the instance -->> choose t2.micro.
+
+	Step 3 == choose No.of instances  -->> choose  1 instance.
+
+	Step 4 == Storage -->> 30GB (Observe we have root  it is like a Drive)
+
+	Step 5 == Add Tag -->>  Giving name to the machine. value -->> my windows. 
+			
+	Step 6 == Security group  -->> It deals with ports. by defolt it will take.(RDP port)
+
+			       We have 0 to 65535  ports.Every port is dedicated to special purpose.
+
+			RDP   ==> 3389
+			SSH   ==> 22
+			HTTP  ==> 80
+			HTTPS ==> 443
+			
+		NOTE:- For windows machine we need to open RDP port  ( Remote Desktop Protocol ).
+			
+			
+	 StEP 7 ==	review & lanch.
+
+              Create a new keypair -->>  download key pair -->> launch instance.
+
+              We get the instance ID ,view Instance. 
+
+          now.. our windows machine is created in AWS cloud.
+
+
+ Now.. the new windows machine is having its own DNS ID ,Username and password.
+
+
+We need to provide all the above 3 details in our local system. We use an application called 'Remote Desktop Connection'.
+
+
+ 
+IN AWS :- navigation for connecting machine. 
+
+         choose machine -->> take 'connect' option -->> select 'RDP clint'
+
+         under that,      DNS ID = copy that one 
+                       USER NAME = copy that one 
+                        PASSWORD = get password   -->> upload .pem file -->> copy password.
+
+    NOTE :- copy these 3 prerequisites for connecting cloud windows machine.
+
+
+
+
+IN LOCAL SYSTEM :- 
+                   
+                  in our local system 'Remote Desktop Connection'. OPEN...
+
+
+
+                            Computer ==>> give DNS ID.
+
+                           User name ==>> give user name (Administrator).
+                            password ==>> give password .
+
+
+                   >>>>  Observe.....we are connected....
+
+
+
+NOTE:-
+
+>> Lets check the hardware configuration
+>> CHeck hard disk
+>> Check Ram
+
+
+You can copy and paste the files from localsystem to cloud server.... 
+
+
+FOR DISCONNECT:- in local system....
+
+To disconnect just close the remote desktop window.
+
+
+
+
+FOR TERMINATION :- in AWS
+
+after completion of our practice just termenate the instance...to avoid the bill...
+
+select instance -->> instance status -->> terminate instance...
+
+
+==================================================================================================================
+
+    
+

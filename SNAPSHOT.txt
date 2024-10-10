@@ -1,0 +1,263 @@
+STATUS CHECKS :-
+
+
+status checks in EC2 instance 
+
+
+1. instance status check == OS 
+
+2. system status check == hardware
+
+
+In availability zone (mumbai) we have physical hard disk.On top of physical hard drive we have virtualization software ( Xen hypervisor ).On Virtualization software , we have Ec2  machine.
+ 
+
+
+2/2 check passed == all checks are passed
+
+it means instance status check and system status check both are passed.. 
+
+ 
+
+1/2 check passed == 1 check passed 
+
+it means system status check is passed , instance status check is failed..
+
+
+solution -->> reboot the instance 
+
+ 
+
+0/2 check passed == NO check passed
+
+it means system status check is failed , 
+
+when the system status check is failed automatically instance status check is also fail
+
+
+
+solution -->> stop and start the instance 
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+PROTECTION FOR ACCIDENTAL TERMINATIONS :-
+
+
+actions -->> instance settings -->> change termination protection -->> enable ...save
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+VOLUMES :- 
+
+volume is knowthing but a hard disk . hard disk is stored as a volumes .
+
+
+volume = hard disk = HDD
+
+
+go to EC2 dash board -->> select volume -->> modify volume -->> change .
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+SCALE UP/DOWN
+
+SCALE IN/OUT
+ 
+
+scale UP and scale down :- ( vertical scalling )
+
+
+scale up = incresing the hardware configuration
+
+scale down = decresing the hardware configuration 
+ 
+
+
+when the incresing the hardware configuration ,we need to stop the machine. 
+
+
+select the machine --> instance settings --> change instance type --> choose 
+
+
+
+
+scale in and scale out :-  ( horizontal scalling )
+
+
+scale in = decresing the number of instance 
+
+scale out = incresing the number of instance 
+
+
+it is knowthing but a autoscaling.....
+ 
+
+
+---------------------------------------------------------------------------------------------------------------------  
+
+ATTACHING AND DETACHING VOLUMES :-
+
+
+
+ec2 instance having multiple volumes, but here we have to take these two.  
+
+1. root 
+
+2. EBS - elastic block store
+
+
+defolt volume is 'root volume'
+
+EBS volumes are aditional volumes,
+
+
+NOTE:-
+       it is working when the both in same subnet..
+
+
+
+for practice first lanch the instance 
+
+create two instances in same subnet , one instance is having one volume that is defolt one root volume and second instance having two volumes root volume and EBS volume ,in this scenario we are detaching the EBS volume from second instance , than the volume is avilable it is not in use so we can attach the EBS volume for first instance this is the concept of attaching and detaching the volumes.
+
+
+Launch instance -->> Amazon Linux -->> Next -->> Next -->> Step 4: Add two new volume( root,EBS )
+
+Observer the field Delete on termination  ( only 1st volume is selected )
+
+This means, when we terminate the machine, only root disk will be deleted 
+
+Next -->> Add name tag -->> Select existing key pair -->> Launch -->> View Instance
+
+Now, I want to detach one volume ( EBS drive )  
+
+Go to volume 
+ 
+Select the EBS volume --> Actions -->> Detach volume --> Yes, detach
+
+Status will be changed to available
+
+Select the same volume -->> Action -->> Attach Volume -->> Select another instance -->> Attach.
+
+
+Now, If you want to attach or detach EBS volume, we no need to stop the machines.
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+REGION SPECIFIC DASHBOARD :-  
+
+every region having their own dash board, for example we are created the instances in the mumbai region, these instances are avilable in only in mumbai region for changing the configurations ,but in the remaining regions not appear, if we check the another region dash board (Singapore) there is no instancesis avilable. we con not able to see also ,so this is the concept of region specific dash board ..
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+ SNAPSHOT :-
+
+snapshot is for move the volumes or copy the volumes from one region to another region , as a volumes we can not able to move from one region to another region we need to covert in to the snapshot . snapshot will copy to another region , in that region snapshot will converted to volume , than volume will attached for our requrement .
+
+
+
+for example we are taking two regions these are first one is mumbai second one is Singapore our EBS volume is in mumbai region instance ..from that we can place it in Singapore region instance.. this is our agenda...
+
+
+
+
+
+>>IN MUMBAI REGION..
+
+
+step 1 :- first detach the volume from the instance .
+
+volume -->> select volume -->> action -->> detach volume.
+
+now the volume is avilable ....
+
+
+
+sete 2 :- convert to snapshot
+
+select avilable volume -->> action -->> convert snapshot
+
+
+
+step 3 :- copy snapshot
+
+go to EC2 dash board -->> snapshot -->> select snpshot -->> action -->> copy snapshot -->> select Singapore region
+
+
+
+
+>> IN SINGAPORE REGION..
+
+
+observation - when we swich to Singapore region in the snapshot dashboard we can able to see our coped snapshot...
+
+
+
+step 4 :- convert the snapshot to volume 
+
+
+select snapshot -->> action -->> convert volume 
+
+
+step 5 :- attach volume 
+
+volume dash board -->> select volume -->> attach volume -->> select the instace 
+
+
+
+these are the steps for migrating the EBS volumes ...
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+  
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+

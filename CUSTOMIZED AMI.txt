@@ -1,0 +1,45 @@
+create customized AMI :- 
+
+for example we are created a one machine installed with some softwares , clint wants that machine so in that case we created customized image from that image . any where it can able to use .
+
+
+select instance -->> action -->> image and templates -->> create image
+
+image name =
+
+create image
+ 
+
+how can we see the image
+
+
+EC2 dash board -->> images -->> AMI's
+
+
+
+for example the image is wants in Singapore region which is in mumbai region
+
+
+image migration
+
+
+in mumbai region
+
+select ami -->> action -->> copy ami
+
+
+
+in Singapore region
+
+in ami's  -->> we can able to see and launch the instance ..
+
+this is the lconcept of customized AMI's
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+

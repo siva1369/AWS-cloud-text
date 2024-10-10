@@ -1,0 +1,375 @@
+
+
+AUTO SCALING : -
+===========================
+
+Auto Scaling helps you ensure that you have the correct number of EC2 instances available to handle the load for your application.You create collections of EC2 instances, called Auto Scaling groups.you can specify the minimum number of instances and the maximum number of instances in Auto Scaling group, and Amazon EC2 Auto Scaling ensures that your group never goes above this size.depends on incomming traffic it will automaticallay create the infrastructure for the appllication to aviding the downtime..if incase  traffic will be decreased automatically instance will be terminated...this is the concept of auto scalling..
+
+
+FOR CREATING AUTO SCALING WE HAVE SIX STAGES , THESE ARE 
+
+
+Stage 1: Create load balancer.
+
+Stage 2: Create Launch configuration  
+
+Stage 3: Create Topic in SNS ( Simple Notification Service )
+
+Stage 4: Create Auto scaling group.
+
+Stage 5: Create Alarm in CloudWatch
+
+Stage 6: Add Policy in Auto Scaling
+
+
+=====================================================================================================================
+
+LET'S  CREATE...
+
+
+Stage 1: CREATE LOAD BALANCER :-
+
+
+Go to EC2 dashboard -->>  load balancer -->>  create load balancer -->> classic load balancer -->> create
+
+
+
+for creating load balencer we have seven step process.
+
+
+step 1 = define load balencer -->> load balencer name == simplelb1 (name can be any thing)
+
+
+step 2 = Assign Security Groups -->> create new security group == simplesg1
+
+                                                   Description == simplesg1
+                               
+                                                   open two ports  SSH  and HTTP
+
+
+
+step 3 = Configure Security Settings -->> take defolt
+
+
+step 4 = Configure Health Check -->> here we have some terms
+ 
+
+in Advanced Details
+
+
+>> Response Timeout = LB request send to webserver it should respond in time what we fix in sec.
+
+>> Interval = LB check the health condition of the webserver every fixed time what we given in sec.
+
+>> Unhealthy threshold = this is attempts for unhealthy conformation ex:- 2 , 3 attempts this request from LB.
+
+>> Healthy threshold = this is attempts for healthy conformation ex:- 2 , 3 attempts this request from webserver.
+
+
+
+step 5 = add EC2 machines --> NO need to add -->> next
+
+step 6 = add tags
+
+step 7 = review and create.
+
+
+LOAD BALANCER WAS CREATED ----NAME = simplelb1 
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+Stage 2: CREATE LAUNCH CONFIGURATION:-
+
+launch configuration is an instance configuration template that an Auto Scaling group uses to launch EC2 instances. When you create a launch configuration, you specify information for the instances.
+
+
+
+EC2 dash board -->> Under Auto Scaling
+
+Select Launch configurations  -->>  Create launch configuration
+
+ 
+LAUNCH CONFIGURATION NAME == simplelc1  ( name can be anything )
+
+
+
+    Step 1 == Select AMI -->> 
+                    which kind of instance it will be launch just copy AMI ID ( EX:-  ami-079b5e5b3971bd10d )
+
+	Step 2 == configure the instance -->> choose t2.micro.
+
+	Step 3 == choose No.of instances  -->> choose  1 instance. and 
+                                          
+          for installing the httpd webserver we have to write bootstrap script 
+          scrooldown the dash board in 'advanced details'--->> 'user data' ..
+          there write the script like this..
+
+#!/bin/bash
+sudo su
+yum update -y
+yum install httpd -y
+cd /var/www/html
+echo " AUTO SCALING SERVER " > index.html
+service httpd start
+chkconfig httpd on
+                                     
+
+	Step 4 == Storage -->> 30GB
+
+	Step 5 == Add Tag 
+			
+	Step 6 == Security group -->> choose existing sescurity group ( what we are created in ELB == simplesg1 )
+
+
+Create new key pair -->> name = simplekp1 -->>  download key pair .
+
+
+
+LAUNCH COFIGURATION WAS CREATED ..,  NAME == simplelc1
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+Stage 3: CREATE TOPIC IN SNS :-
+
+
+Services -->>   Application Integration  -->>  Simple Notification Service.
+
+
+
+CREATE TOPIC
+
+topic Name == simpletopic1
+
+Type == Standard
+
+
+Display Name == simpletopic1
+
+>> Create topic
+
+
+
+Add SUBSCRIPTIONS TO THE TOPIC 
+
+Create Subscription
+
+Protocol == Email
+
+Endpoint == example123@gmail.com
+
+>> Create Subscription
+
+
+
+for conformation we need to login that mail , we got mail from AWS  open that one just confirm .
+
+
+
+SNS WAS CREATED , TOPIC NAME == simpletopic1 
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+Stage 4: CREATE AUTO SCALING GROUP :-
+
+
+GO to lanch configuration dash board 
+
+Select the Launch Configuration -->> Actions -->> Create Auto Scaling Group
+
+
+from here we have seven step process is remaining
+
+
+Step 1: Auto Scaling group name == simapleas1
+
+Step 2: select Subnet == ap-south-1a
+
+Step 3: Attach load balancer 
+
+-->> choose Existing Load Balancer 
+-->> Choose Classic Load Balancers 
+-->> Select Load Balancer what we created ( simplelb1 )
+
+
+Step 4: Configure Group size
+
+desired capacity = 1 
+minimum capacity = 1
+maximum capacity = 10
+
+
+
+Step 5: add notifications
+
+sns topic = add sns topic (simpletopic1)
+
+
+Step 6: Next 
+
+
+Step 7: Review and Create.
+
+
+we are given desired capacity is 1 ,so By this time one EC2 Machine could have been created.
+
+check EC2 instance created are not .....
+
+
+AUTO SCALING GROUP WAS CREATED NAME == simapleas1
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+Stage 5: CREATE ALARM IN CLOUDWATCH:- 
+
+
+Services -->> Management & Governance -->> CloudWatch
+
+Alarm -->> in Alaram -->>  Create Alarm
+
+
+create these two alarams
+
+simplealaram1   ==  > 80%
+
+simplealaram2   ==  < 20%
+
+
+we have four steps to create Alarm 
+
+
+
+step 1: specify metrics and condition
+
+Select Metric -->> EC2 -->> By Auto Scaling Group 
+
+Select Auto Scaling Group Name  ; Metric Name == CPUUtilization
+
+>>Select Metric
+
+Conditions -->>  Static 
+
+Greater than == 80% 
+
+(it means when the cpu utilization is 80% touch and above automatically new instance will be created )
+
+>> Next
+
+
+
+step 2: configure action
+
+Select  existing SNS topic ( simpletopic1 ) 
+
+>> Next 
+
+
+
+step 3: add name and description
+
+Alarm Name == simplealarm1
+
+description = simplealarm1
+
+>> Create Alarm.
+
+
+
+step 4: preview and create
+
+>> next
+
+
+
+
+
+Similarly Create another Alarm (simplealarm2) for CPU Utilization is lessthen 20%  ( <20% )
+
+
+WE ARE CREATED TWO ALARMS NAMES
+
+
+simplealaram1   ==  > 80%
+
+simplealaram2   ==  < 20%
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+
+Stage 6: ADD POLICY IN AUTO SCALING :-
+
+
+
+Select AutoScaling groups -->> Automatic Scaling Tab -->> Dynamic scaling policies (Add Policy)
+
+
+
+policy-1
+
+Policy Type == Simple scaling
+
+Scaling policy name == Increase_Policy
+
+CloudWatch Alarm == simplealarm1
+
+Take the Action ==  Add == 1 == Unit ( EC2 Machine )
+
+
+>> Create
+
+
+
+
+policy-2
+
+Policy Type == Simple scaling
+
+Scaling policy name == decrease_Policy
+
+CloudWatch Alarm == simplealarm2
+
+Take the Action ==  remove == 1 == Unit ( EC2 Machine )
+
+
+>> Create
+
+
+our two policys are created ....
+
+1 =  Increase_Policy
+
+2 =  decrease_Policy
+
+
+this is the infrastructure with auto scaling servese, depends on incomming traffic infrastructure will be developed with out down-time of the application.infrastructure is moulding as per application usecase and perfamace. with alert notifications (SNS), monitoring the CPU utilizations with cloud watch give feed back of CPU health condition....
+
+
+=====================================================================================================================
+
+
+we need to delete the all servecs what we are created to avoid the bill...
+
+
+
+1 Delete Autoscaling group
+
+2 Delele launch configuration ( Instances will be terminated automatically) 
+
+3 Delete Load balancer
+
+4 Delete Topic and subscriptions
+
+5 Delete Alarms
+
+=====================================================================================================================
+
+

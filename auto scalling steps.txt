@@ -1,0 +1,79 @@
+1. create load balencer 
+2. create lanch configuration
+3. create topic in SNS 
+4. create auto scalling group
+5. create alarm in cloud watch 
+6. add policys in auto scalling
+
+
+
+
+
+1. create load balencer
+
+name = simplelb1
+
+create security group 
+
+name = simplesg1
+
+
+
+2.create lanch configuration
+
+name = simplelc1
+
+AMI ID - ami-0a3277ffce9146b74
+
+#!/bin/bash
+sudo su
+yum update -y
+yum install httpd -y
+cd /var/www/html
+echo " autoscalling server " > index.html
+service httpd start
+chkconfig httpd on
+
+
+
+3. create topic in SNS (application integration)
+
+topic name = simplesns1
+
+
+
+4. create auto scalling group
+
+name = simpleas1
+
+
+
+5. create alarm in cloud watch
+
+(management & governance)
+
+name = simplecw1
+
+
+alaram-1   =  > 80%
+
+Alaram-2   =  < 20%
+
+
+6. add policys in auto scalling
+
+policy type = simple scaling
+
+name = simpleasp1
+
+name = simpleasp2
+
+
+
+
+
+
+
+
+
+

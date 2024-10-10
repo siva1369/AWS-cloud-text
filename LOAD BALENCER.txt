@@ -1,0 +1,171 @@
+ELB = ELASTIC LOAD BALENCER 
+
+
+A load balancer accepts incoming traffic from clients(end user) and routes requests to EC2 instances(Targets). 
+The load balancer also monitors the health condition of its registered targets and ensures that it routes traffic only to healthy targets.When the load balancer detects an unhealthy target, it stops routing traffic to that target. It then resumes routing traffic to that target when it detects that the target is healthy again.
+---------------------------------------------------------------------------------------------------------------------
+
+
+EXAMPLE :- 
+
+we are creating a load balencer atmosphere..for that first we are create two webservers webserver-1 and webserver-2... than create load balencer ... add these two websevers to load balencer..configure the load balencer
+finally check the scenario, for checking.. take the 'DNS ID' of load balencer past it in the browser frequently refresh the page we can observe the load balencer concept...
+
+
+
+
+first we create EC2 machine as a web server..... call it as webserver-1
+
+
+    Step 1 == Select AMI(Amazon Machine Image) -->> select amazon linux  (webserver-1)
+
+	Step 2 == configure the instance -->> choose t2.micro.
+
+	Step 3 == choose No.of instances  -->> choose  1 instance. and 
+                                          
+          for installing the httpd webserver we have to write bootstrap script 
+          scrooldown the dash board in 'advanced details'--->> 'user data' ..
+          there write the script like this..
+
+#!/bin/bash
+sudo su
+yum update -y
+yum install httpd -y
+cd /var/www/html
+echo " webserver-1 " > index.html
+service httpd start
+chkconfig httpd on
+                                     
+
+	Step 4 == Storage -->> 30GB (Observe we have root  it is like a Drive)
+
+	Step 5 == Add Tag 
+			
+	Step 6 == Security group  -->> here we have to create new security group name can be any thing.
+                                   for example 'sivasg30'.
+                                   open two ports SSH,HTTP...
+    
+    StEP 7 == review & lanch.
+
+              Create a new keypair -->>  download key pair -->> launch instance.
+
+our first webserver was created.. for conformation ..take public IP of this instance past in browser..
+we can observer echo what we were wrote in bootstrap script. (webserver-1).
+
+
+---------------------------------------------------------------------------------------------------------------
+
+
+
+
+THAN WE ARE CREATE SECOND WEBSERVER... call it as WEBSERVER-2
+
+
+    Step 1 == Select AMI(Amazon Machine Image) -->> select amazon linux  (webserver-2)
+
+	Step 2 == configure the instance -->> choose t2.micro.
+
+	Step 3 == choose No.of instances  -->> choose  1 instance. and 
+                                          
+          for installing the httpd webserver we have to write bootstrap script 
+          scrooldown the dash board in 'advanced details'--->> 'user data' ..
+          there write the script like this..
+
+#!/bin/bash
+sudo su
+yum update -y
+yum install httpd -y
+cd /var/www/html
+echo " webserver-2 " > index.html
+service httpd start
+chkconfig httpd on
+                                     
+
+	Step 4 == Storage -->> 30GB (Observe we have root  it is like a Drive)
+
+	Step 5 == Add Tag  
+			
+	Step 6 == Security group  -->> we are already created security group in webserver-1...
+              so choose existing security group -->> select 'sivasg30'(what you given in webserver-1) 
+              ports automatically open...                                  
+    
+    StEP 7 == review & lanch.
+
+our second webserver was created.. for conformation ..take public IP of this instance past in browser..
+we can observer echo what we were wrote in bootstrap script. (webserver-2).
+
+------------------------------------------------------------------------------------------------------------------
+
+our two webservers are ready to give service ...than create load balancer.....
+
+------------------------------------------------------------------------------------------------------------------
+
+navigation:- go to EC2 dash board -->> scrool down the page -->> we can choose the term load balencer 'click'
+
+------------------------------------------------------------------------------------------------------------------
+
+CREATE LOAD BALENCER :- 
+
+take classic load balencer for web servers -- create
+
+
+for creating load balencer we have seven step process.
+
+
+
+step 1 = define load balencer -->> load balencer name 
+
+step 2 = Assign Security Groups -->> go with existed one select (sivasg30)
+
+step 3 = Configure Security Settings -->> take defolt
+
+step 4 = Configure Health Check -->> here we have some terms
+ 
+
+in Advanced Details
+
+Response Timeout = LB request send to webserver it should respond in time what we fix in sec.
+
+Interval = LB check the health condition of the webserver every fixed time what we given in sec.
+
+Unhealthy threshold = this is attempts for unhealthy conformation ex:- 2 , 3 attempts this request from LB.
+
+Healthy threshold = this is attempts for healthy conformation ex:- 2 , 3 attempts this request from webserver.
+
+
+
+step 5 = add EC2 machines (webservers)--> webserver-1 and 2
+
+step 6 = add tags
+
+step 7 = review and create.
+
+
+our load balencer also created .... for checking take 'DNS ID' of load balencer past in browser...
+
+frequently refresh the page, we can observe webserver-1 , webserver-2 these pages also change frequently...
+
+that means load balencer will distrusting the load to both machines according to traffic...
+
+If one server is down, it should redirect the traffic to another server.
+
+
+
+=====================================================================================================================
+
+delete the load balencer ...
+terminate the two EC2 instance...for avoid the bill.....
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+             
+
+
+
+
+
+
+
+
+
+

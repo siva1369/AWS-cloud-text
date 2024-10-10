@@ -1,0 +1,131 @@
+FOR CREATING A WEBSERVER:-   (HTTPD WEB SERVER)
+
+
+
+Lanch new EC2 machine....
+
+
+
+	Step 1 == Select AMI(Amazon Machine Image) -->> select amazon linux
+
+	Step 2 == configure the instance -->> choose t2.micro.
+
+	Step 3 == choose No.of instances  -->> choose  1 instance.
+
+	Step 4 == Storage -->> 30GB (Observe we have root  it is like a Drive)
+
+	Step 5 == Add Tag -->>  Giving name to the machine. value -->> my windows. 
+			
+	Step 6 == Security group  -->> It deals with ports. by defolt it will take.(RDP for windowa SSH FOR linux)
+ 
+    StEP 7 ==	review & lanch.
+
+              Create a new keypair -->>  download key pair -->> launch instance.
+
+
+
+
+
+IN LOCAL MACHINE:-
+
+NOTE:-
+
+Credentials required for windows machines IS DNS,USER NAME and PASSWORD.in local machine 'Remote Desktop Connection'.
+
+FOR LINUX MACHINE :- We have multiple ways to connect linux 
+
+1 way :- By using 'PUTTY' terminal.
+
+putty required ppk file ( Putty private key ).
+
+
+2 way :- By using 'GIT BASH' terminal.
+
+git bash requires pem file .
+
+
+
+IN CLOUD :-
+
+for connecting linux machine ...navigation...
+
+select machine -->> connect -->> SSH clint -->> take ssh command. (copy the command).
+
+
+
+THAN ....in local system ..
+
+ take any terminal git bash or putty... past the ssh command ... it will connect.
+
+
+OBSERVATION:- 
+
+in terminal we can able to observe the small change that is 'IP address ' that means we are connected our cloud server.
+
+ 
+
+>> for creating a web server we need to install some web packages (software).
+
+
+>> run this commands in the terminal ( linux machine )...for installing the web package.
+
+
+
+$ sudo su
+
+# yum update -y
+
+# yum install httpd -y
+
+# cd /var/www/html
+
+# echo "write any name" > index.html
+
+# service httpd start
+
+# chkconfig httpd on  
+
+
+
+>> Now Our Linux machine is webserver.
+
+>> Now we able to access the web pages ?
+
+
+
+IN CLOUD:-
+
+select instance -->> under detail -->> take public IP.
+
+Copy the public IP and paste in browser...
+
+We are unable to access... because we are not select the HTTP port that's why we cannot able to web server.
+
+Browser communicates using http port.
+
+We should also open http port.
+
+
+
+>> Lets open http port:-
+
+
+IN AWS Dashboard -->> security groups -->> Select our security group --> Inbound Edit --> Add rule
+
+Select Type = HTTP -->> Save.
+
+Observation: We get two entries for HTTP port.
+
+One for ipv4 and other for ipv6.
+
+
+
+>> Now Lets trying to access the web page ....take public IP ... past in the browser..
+
+
+>> Yes... now we can able to access the web page...
+
+
+=============================================================================================================
+
+

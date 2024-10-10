@@ -1,0 +1,179 @@
+simple storage sarvice
+
+s3 is storage service
+
+type  -- it is a object storage service
+
+object -- file storage
+
+file -- pdf,jpj,audio,video
+
+it is a secure , durable and highly scalable object storage 
+it is easy to use with a simple web service interface to store and retrieve any amount of data from anywhere on the web
+
+
+it is  object based storage
+files can be 0 byte to 5 TB (graphical)
+file can be 0 byte to 5 gb (cli)
+there is unlimited storage 
+objects are stored in buckets.
+S3 bucket name must be unique globally
+
+service -->> storage -->> S3
+
+1 create the bucket
+
+2 upload the object into bucket
+
+
+bucket nameing rules
+
+bucket name should be 3 to 63 characters
+
+this is not a region specific dash board it in global
+
+every object having their own url
+
+
+
+versioning :-   (recycle bin)
+ 
+it having 2 advantages
+
+1 recover the deleted object
+
+2 change version
+
+bucket -->> properties -->> bucket versioning 
+
+enable...
+
+
+how can it recover...
+
+just enable the shown version
+
+
+........................................
+
+static website hosting :-
+
+ for example we have a website www.example.com  in this domine we can able to place some videos ,files ,audio..etc..
+
+index.html
+error.html
+
+endpoint 
+
+.........................................
+
+storage class
+
+defolt -- standard -- high speed 
+
+it is for traffic 
+
+.........................................
+
+cross region replication :-
+
+
+
+
+............................................
+tranfor acceleration's
+
+............................................
+
+encryption :- 
+
+1 advanced - single encription
+2 key managed - double encription
+
+for security  
+
+............................................
+
+
+tags , metadata :-
+
+mata data provides the more info about bucket
+
+tags also providing more info about object
+
+.............................................
+ACL and bucket policy :-
+
+
+i want to provide the access particular persons
+
+
+select bucket -->> permission -->> ACL -->> edit -->> add grantee -->> give canonical id
+
+
+.............................................
+
+life cycle management :-
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
