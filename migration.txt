@@ -1,6 +1,67 @@
-wget -O ./aws-replication-installer-init.py https://aws-application-migration-service-ap-south-1.s3.ap-south-1.amazonaws.com/latest/linux/aws-replication-installer-init.py
+on-prem to aws cloud migration:-  
+-------------------------------- 
+
+now we are going to do server migration on-prem to cloud using application migration servie (MGN).
+
+In the process of migration we have multipule methods those are 
+
+1. Rehosting (lift and shift)
+ 
+2. Replotforming (lift ,tinker and shift)
+
+3. Refactoring (Re-architecting)
+
+4. Repurchaging (software as a service)
+
+5. Retaining
+
+6. Retiring
+
+
+In this migration we are using rehosting method means lift-and-shift method it means the process of moving the application with out any change.
 
 
 
+1. first we need to create the infrastucture for the open shift application like vpc,subnets,RT,and networking parts.
 
-sudo python3 aws-replication-installer-init.py --region ap-south-1 --aws-access-key-id AKIAYDSAUCOZ2ML3ER7B --aws-secret-access-key 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 --no-prompt
+on-prem server we call it as source server or source mechine
+
+
+2. than we need to creat one IAM user , user should have admistrative access give permissions like that. 
+
+take access key and secrat access key from that.
+
+access key =
+secrat access key =
+
+3. than go to aws console choase a service called "aws application migration service" (MGN)
+
+just follow the following steps for create agent
+
+click mgn >> get started >>source servers >> add server >> 
+
+here 
+
+> select operating system
+
+linux/windows
+
+> disk selection
+
+better go to all disks
+
+>give both access key and secret access key 
+
+than teke agent download command run in the source mechine, agent get downloaded in that 
+after that take agent run command process in source mechine.
+
+after few minitus you get success messsage in you source mechine then source mechine apper in the mgn portal.
+
+
+data get synking we can observe in the portal 
+
+in the portal first colaum shows a next step process, when it show the next step just click in to that .
+
+those options are in the actions tab just click the actions tab we can able to see the next steps.
+
+for the compatabulity and testing purpose 2 or 3 mechines get launched and terminated thats not a issue finally get one mechine that is final product or archive mechine.
