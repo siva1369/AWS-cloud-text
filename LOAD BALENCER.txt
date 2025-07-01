@@ -1,3 +1,142 @@
+AWS Elastic Load Balancing (AWS ELB):-
+-------------------------------------
+
+Elastic Load Balancing automatically distributes incoming application traffic across multiple targets, such as Amazon EC2 instances, containers, and IP addresses.
+
+Network traffic can be distributed across a single or multiple Availability Zones (AZs) within an AWS Region.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+OSI 7 Layers (Open Systems Interconnection) Modal — a conceptual framework used to understand network interactions in seven layers:
+
+
+| Layer | Name             | Description                                                                 |
+|-------|------------------|-----------------------------------------------------------------------------|
+| 7     | Application      | End-user layer; interfaces with software applications (e.g., HTTP, FTP)     |
+| 6     | Presentation     | Data formatting, encryption, decryption, compression (e.g., SSL, JPEG)      |
+| 5     | Session          | Manages sessions (connections) between applications (e.g., NetBIOS, RPC)    |
+| 4     | Transport        | Reliable data transfer, error handling (e.g., TCP, UDP)                     |
+| 3     | Network          | Routing and forwarding of packets (e.g., IP, ICMP)                          |
+| 2     | Data Link        | Data framing, MAC addressing, error detection (e.g., Ethernet, PPP)         |
+| 1     | Physical         | Transmission of raw bits over physical medium (e.g., cables, switches)      |
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+There are four types of Elastic Load Balancer (ELB) on AWS:
+
+Classic Load Balancer (CLB) – this is the oldest of the three and provides basic load balancing at both layer 4 and layer 7.
+Application Load Balancer (ALB) – layer 7 load balancer that routes connections based on the content of the request.
+Network Load Balancer (NLB) – layer 4 load balancer that routes connections based on IP protocol data.
+Gateway Load Balancer (GLB) – layer 3/4 load balancer used in front of virtual appliances such as firewalls and IDS/IPS systems.
+
+
+Note: The CLB is not covered in detail on this page as it is on old generation load balancer and is no longer featured on most AWS exams.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+The following table provides a comparison of some of the key features relevant to AWS exams:
+
+
+
+| Feature                         | Application Load Balancer | Network Load Balancer | Classic Load Balancer | Gateway Load Balancer |
+|---------------------------------|--------------------------|-----------------------|-----------------------|-----------------------|
+| OSI Layer                       | Layer 7                  | Layer 4               | Layer 4/7             | Layer 3 Gateway + Layer 4 Load Balancing |
+| Target Type                     | IP, Instance, Lambda     | IP, Instance, ALB     | N/A                   | IP, Instance          |
+| Protocols                       | HTTP, HTTPS              | TCP                   | TCP, SSL, HTTP, HTTPS | IP                    |
+| WebSockets                      | ✔                        | ✔                     |                       | ✔                     |
+| IP addresses as a target        | ✔                        | ✔                     |                       |                       |
+| HTTP header-based routing       | ✔                        |                       |                       |                       |
+| HTTP/2/gRPC                     | ✔                        |                       |                       |                       |
+| Configurable idle connection timeout | ✔                  |                       | ✔                     |                       |
+| Cross-zone load balancing       | ✔                        | ✔                     | ✔                     | ✔                     |
+| SSL Offloading                  | ✔                        | ✔                     | ✔                     |                       |
+| Server Name Indication (SNI)    | ✔                        | ✔                     | ✔                     |                       |
+| Sticky sessions                 | ✔                        | ✔                     | ✔                     | ✔                     |
+| Static / Elastic IP Address     |                          | ✔                     |                       |                       |
+| Custom Security policies        |                          |                       | ✔                     |                       |
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Elastic Load Balancing provides fault tolerance for applications by automatically balancing traffic across targets –
+
+Targets can be Amazon EC2 instances, containers, IP addresses, and Lambda functions.
+
+ELB distributes traffic across Availability Zones while ensuring only healthy targets receive traffic.
+
+Only 1 subnet per AZ can be enabled for each ELB.
+
+Amazon Route 53 can be used for region load balancing with ELB instances configured in each region.
+
+ELBs can be Internet facing or internal-only.
+
+Internet facing ELB:
+
+ELB nodes have public IPs.
+Routes traffic to the private IP addresses of the EC2 instances.
+Need one public subnet in each AZ where the ELB is defined.
+ELB DNS name format: <name>-<id-number>.<region>.elb.amazonaws.com.
+Internal only ELB:
+
+ELB nodes have private IPs.
+Routes traffic to the private IP addresses of the EC2 instances.
+ELB DNS name format: internal-<name>-<id-number>.<region>.elb.amazonaws.com.
+Internal-only load balancers do not need an Internet gateway.
+
+EC2 instances and containers can be registered against an ELB.
+
+ELB nodes use IP addresses within your subnets, ensure at least a /27 subnet and make sure there are at least 8 IP addresses available for the ELB to scale.
+
+An ELB forwards traffic to eth0 (primary IP address).
+
+An ELB listener is the process that checks for connection requests:
+
+CLB listeners support the TCP and HTTP/HTTPS protocols.
+ALB listeners support the HTTP and HTTPS protocols.
+NLB listeners support the TCP, UDP and TLS protocols.
+GLB listeners support the IP protocol.
+Deleting an ELB does not affect the instances registered against it (they won’t be deleted; they just won’t receive any more requests).
+
+For ALB at least 2 subnets must be specified.
+
+For NLB only one subnet must be specified (recommended to add at least 2).
+
+ELB uses a DNS record TTL of 60 seconds to ensure new ELB node IP addresses are used to service clients.
+
+By default the ELB has an idle connection timeout of 60 seconds, set the idle timeout for applications to at least 60 seconds.
+
+Perfect Forward Secrecy (PFS) provides additional safeguards against the eavesdropping of encrypted data, using a unique random session key.
+
+Server Order Preference lets you configure the load balancer to enforce cipher ordering, providing more control over the level of security used by clients to connect with your load balancer.
+
+ELB does not support client certificate authentication (API Gateway does support this).
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+ELB Security Groups:-
+--------------------
+
+Security groups control the ports and protocols that can reach the front-end listener.
+
+In non-default VPCs you can choose which security group to assign.
+
+You must assign a security group for the ports and protocols on the front-end listener.
+
+You need to also allow the ports and protocols for the health check ports and back-end listeners.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 ELB = ELASTIC LOAD BALENCER 
 
 
@@ -35,6 +174,27 @@ cd /var/www/html
 echo " webserver-1 " > index.html
 service httpd start
 chkconfig httpd on
+
+
+NOTE:- this is for Amazon Linux mechines , if you want ubuntu Linux please use below bootstrap
+
+
+#!/bin/bash
+sudo apt update
+sudo apt-get install httpd -y
+cd /var/www/html
+echo " webserver-1 " > index.html
+service httpd start
+chkconfig httpd on
+
+or 
+
+#!/bin/bash
+sudo apt update
+sudo apt-get install apache2 -y
+cd /var/www/html
+echo " webserver-1 " > index.html
+
                                      
 
 	Step 4 == Storage -->> 30GB (Observe we have root  it is like a Drive)
@@ -79,6 +239,28 @@ cd /var/www/html
 echo " webserver-2 " > index.html
 service httpd start
 chkconfig httpd on
+
+
+NOTE:- this is for Amazon Linux mechines , if you want ubuntu Linux please use below bootstrap
+
+
+#!/bin/bash
+sudo apt update
+sudo apt-get install httpd -y
+cd /var/www/html
+echo " webserver-1 " > index.html
+service httpd start
+chkconfig httpd on
+
+or 
+
+#!/bin/bash
+sudo apt update
+sudo apt-get install apache2 -y
+cd /var/www/html
+echo " webserver-1 " > index.html
+
+
                                      
 
 	Step 4 == Storage -->> 30GB (Observe we have root  it is like a Drive)
@@ -159,7 +341,6 @@ terminate the two EC2 instance...for avoid the bill.....
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
              
-
 
 
 
