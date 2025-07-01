@@ -1,3 +1,150 @@
+AWS Auto Scaling:- (AWS AS)
+---------------------------
+
+AWS Auto Scaling monitors your applications and automatically adjusts capacity to maintain steady, predictable performance at the lowest possible cost.
+
+AWS Auto Scaling refers to a collection of Auto Scaling capabilities across several AWS services.
+
+The services within the AWS Auto Scaling family include:
+
+Amazon EC2 (known as Amazon EC2 Auto Scaling).
+Amazon ECS.
+Amazon DynamoDB.
+Amazon Aurora.
+
+Amazon EC2 Auto Scaling helps you ensure that you have the correct number of Amazon EC2 instances available to handle the load for your application.
+
+You create collections of EC2 instances, called Auto Scaling groups.
+
+Automatically provides horizontal scaling (scale-out) for your instances.
+
+Triggered by an event of scaling action to either launch or terminate instances.
+
+Availability, cost, and system metrics can all factor into scaling.
+
+Auto Scaling is a region-specific service.
+
+Auto Scaling can span multiple AZs within the same AWS region.
+
+Auto Scaling can be configured from the Console, CLI, SDKs and APIs.
+
+There is no additional cost for Auto Scaling, you just pay for the resources (EC2 instances) provisioned.
+
+Auto Scaling works with ELB, CloudWatch and CloudTrail.
+
+You can determine which subnets Auto Scaling will launch new instances into.
+
+Auto Scaling will try to distribute EC2 instances evenly across AZs.
+
+Launch configuration is the template used to create new EC2 instances and includes parameters such as instance family, instance type, AMI, key pair, and security groups.
+
+You cannot edit a launch configuration once defined.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+There are four scaling options:
+
+Maintain – keep a specific or minimum number of instances running.
+Manual – use maximum, minimum, or a specific number of instances.
+Scheduled – increase or decrease the number of instances based on a schedule.
+Dynamic – scale based on real-time system metrics (e.g. CloudWatch metrics).
+Predictive – machine learning to schedule the right number of EC2 instances in anticipation of approaching traffic changes.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1. create load balencer 
+2. create lanch configuration
+3. create topic in SNS 
+4. create auto scalling group
+5. create alarm in cloud watch 
+6. add policys in auto scalling
+
+
+
+
+
+1. create load balencer
+
+name = simplelb1
+
+create security group 
+
+name = simplesg1
+
+
+
+2.create lanch configuration
+
+name = simplelc1
+
+AMI ID - ami-0a3277ffce9146b74
+
+#!/bin/bash
+sudo su
+yum update -y
+yum install httpd -y
+cd /var/www/html
+echo " autoscalling server " > index.html
+service httpd start
+chkconfig httpd on
+
+or 
+
+#!/bin/bash
+sudo apt update
+sudo apt-get install apache2 -y
+cd /var/www/html
+echo " autoscalling server " > index.html
+
+
+
+
+3. create topic in SNS (application integration)
+
+topic name = simplesns1
+
+
+
+4. create auto scalling group
+
+name = simpleas1
+
+
+
+5. create alarm in cloud watch
+
+(management & governance)
+
+name = simplecw1
+
+
+alaram-1   =  > 80%
+
+Alaram-2   =  < 20%
+
+
+6. add policys in auto scalling
+
+policy type = simple scaling
+
+name = simpleasp1
+
+name = simpleasp2
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
 
 AUTO SCALING : -
