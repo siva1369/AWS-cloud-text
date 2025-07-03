@@ -1,36 +1,137 @@
-simple storage sarvice
+Amazon S3 :- (simple storage service)
+--------------------------------------
 
-s3 is storage service
+Amazon S3 is object storage built to store and retrieve any amount of data from anywhere on the Internet.
 
-type  -- it is a object storage service
+It’s a simple storage service that offers an extremely durable, highly available, and infinitely scalable data storage infrastructure at very low costs.
 
-object -- file storage
+Amazon S3 is a distributed architecture and objects are redundantly stored on multiple devices across multiple facilities (AZs) in an Amazon S3 region.
 
-file -- pdf,jpj,audio,video
-
-it is a secure , durable and highly scalable object storage 
-it is easy to use with a simple web service interface to store and retrieve any amount of data from anywhere on the web
+Amazon S3 is a simple key-based object store.
 
 
-it is  object based storage
-files can be 0 byte to 5 TB (graphical)
-file can be 0 byte to 5 gb (cli)
-there is unlimited storage 
-objects are stored in buckets.
-S3 bucket name must be unique globally
+Lifecycle – define an object’s lifecycle.
 
-service -->> storage -->> S3
+Website – configuration for hosting static websites.
+
+Versioning – retain multiple versions of objects as they are changed.
+
+Access Control Lists (ACLs) – control permissions access to the bucket.
+
+Bucket Policies – control access to the bucket, Bucket policies are limited to 20 KB in size.
+
+Transfer acceleration - Amazon S3 Transfer Acceleration enables fast, easy, and secure transfers of files over long distances between your client and your Amazon S3 bucket.
+
+Server-side encryption options - Server-side encryption protects data at rest.
+
+Event Notifications - Amazon S3 event notifications can be sent in response to actions in Amazon S3 like PUTs, POSTs, COPYs, or DELETEs,Amazon S3 event notifications enable you to run workflows, send alerts, or perform other actions in response to changes in your objects stored in S3.
+
+Object Tags - S3 object tags are key-value pairs applied to S3 objects which can be created, updated, or deleted at any time during the lifetime of the object.
+
+Cross Region Replication - CRR is an Amazon S3 feature that automatically replicates data across AWS Regions, With CRR, every object uploaded to an S3 bucket is automatically replicated to a destination bucket in a different AWS Region that you choose, Provides automatic, asynchronous copying of objects between buckets in different regions, CRR is configured at the S3 bucket level.
+
+S3 Inventory - You can use S3 Inventory to audit and report on the replication and encryption status of your objects for business, compliance, and regulatory needs.
+
+
+
+
+
+Bucket = 5TB max size
+
+Object = 5GB max size
+
+100 buckets per account by default.
+
+
+
+Use Cases:-
+-----------
+
+
+Backup and Storage – Provide data backup and storage services for others.
+
+Application Hosting – Provide services that deploy, install, and manage web applications.
+
+Media Hosting – Build a redundant, scalable, and highly available infrastructure that hosts video, photo, or music uploads and downloads.
+
+Software Delivery – Host your software applications that customers can download.
+
+Static Website – you can configure a static website to run from an S3 bucket.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Storage Class :-
+---------------
+
+AWS S3 Storage Class means different types of storage options provided by Amazon S3 to store data based on how frequently and quickly you need to access it. To help you save money by choosing the right storage for your data.
+
+Each class has different cost, speed, and durability depending on your use case like:
+
+Frequent access
+
+Infrequent access
+
+Archival or backup
+
+To help you save money by choosing the right storage for your data.
+
+
+1. S3 Standard:
+- Use: Frequently accessed data (e.g., web apps, CI/CD artifacts)
+- Description: High availability and performance
+- Cost: (Higher)
+- Retrieval: Instant
+
+
+2. S3 Intelligent-Tiering:
+- Use: Unknown or changing access patterns
+- Description: Auto-moves data between tiers to save cost
+- Cost: - M
+- Retrieval: Instant
+
+
+3. S3 Standard-IA (Infrequent Access):
+- Use: Backups, DR data, logs
+- Description: Lower cost, charges for access
+- Cost: L
+- Retrieval: Instant
+
+
+4. S3 One Zone-IA:
+- Use: Backups that can tolerate AZ loss
+- Description: Single AZ, lower cost, lower durability
+- Cost: L
+- Retrieval: Instant
+
+
+5. S3 Glacier:
+- Use: Archived, infrequently accessed data
+- Description: Low cost, slow retrieval (minutes to hours)
+- Cost: Cheapest for archives
+- Retrieval: Minutes-Hours
+
+
+6. S3 Glacier Deep Archive:
+- Use: Long-term archive (7-10 years)
+- Description: Lowest-cost storage
+- Cost: Lowest overall
+- Retrieval: Up to 12 hours
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+services-->> storage -->> S3
 
 1 create the bucket
 
 2 upload the object into bucket
 
 
-bucket nameing rules
+bucket naming rules, bucket name should be 3 to 63 characters
 
-bucket name should be 3 to 63 characters
-
-this is not a region specific dash board it in global
 
 every object having their own url
 
@@ -65,115 +166,4 @@ error.html
 
 endpoint 
 
-.........................................
-
-storage class
-
-defolt -- standard -- high speed 
-
-it is for traffic 
-
-.........................................
-
-cross region replication :-
-
-
-
-
-............................................
-tranfor acceleration's
-
-............................................
-
-encryption :- 
-
-1 advanced - single encription
-2 key managed - double encription
-
-for security  
-
-............................................
-
-
-tags , metadata :-
-
-mata data provides the more info about bucket
-
-tags also providing more info about object
-
-.............................................
-ACL and bucket policy :-
-
-
-i want to provide the access particular persons
-
-
-select bucket -->> permission -->> ACL -->> edit -->> add grantee -->> give canonical id
-
-
-.............................................
-
-life cycle management :-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
