@@ -1,0 +1,22 @@
+AWS CloudTrail:-
+---------------
+AWS CloudTrail is a web service that records activity made on your account.
+
+A CloudTrail trail can be created which delivers log files to an Amazon S3 bucket.
+
+CloudTrail is about logging and saves a history of API calls for your AWS account.
+
+CloudTrail enables governance, compliance, and operational and risk auditing of your AWS account.
+
+
+CloudTrail provides visibility into user activity by recording actions taken on your account.
+
+
+CloudTrail logs:- Console logins, API calls, Service events (like EC2 start/stop, S3 bucket creation), IAM actions (user creation, role assignment), Lambda invocations, CloudFormation changes.
+
+
+
+Each event contains:- EventTime, UserIdentity, EventSource, EventName, AWSRegion, SourceIP.
+
+
+
