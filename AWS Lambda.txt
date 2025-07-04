@@ -1,0 +1,99 @@
+AWS Lambda:-
+------------
+
+AWS Lambda is a serverless component in AWS that allows you to run code without provisioning or managing servers. 
+
+It automatically executes code in response to triggers such as S3 uploads, API Gateway requests, DynamoDB changes, or scheduled events via CloudWatch. 
+
+Since Lambda manages the underlying infrastructure, it's highly scalable, cost-effective, and perfect for automating compute-related tasks like stopping EC2 instances, processing logs, or resizing images.
+
+
+
+Key Concepts:-
+-------------
+
+1. Runtime:- runtime is the language environment in which your Lambda function runs. it supports Python, Node.js, Java, Go, .NET (C#), Ruby, and custom runtimes via Linux containers.
+
+
+2. Timeout:- Every Lambda function has a maximum execution time (timeout).
+
+Min Default: 3 seconds
+
+Max: 15 minutes (900 seconds)
+
+
+3. Memory Allocation:- we can allocate 128 MB to 10,240 MB (10 GB).
+
+
+4. Ephemeral Storage (/tmp):- Each Lambda has 512 MB of temporary storage by default can be increased to 10 GB, Useful for temporarily storing files during execution.
+
+
+5. Concurrency:- number of Lambda executions running at the same time.
+
+AWS provides 1000 concurrent executions per region by default, You can request quota increases.
+
+
+Reserved Concurrency: Set a limit per function to avoid overload.
+
+Provisioned Concurrency: Keeps functions pre-warmed for consistent performance.
+
+
+6. Triggers / Event Sources
+
+Lambda can be triggered by:
+
+----------------------------------------------------------------
+| AWS Service          | Description                           |
+| ---------------------|-------------------------------------- |
+| S3                   | Run function when object is uploaded. |
+| API Gateway          | For serverless REST APIs.             |
+| CloudWatch           | For scheduled tasks (cron).           |
+| DynamoDB Streams     | On data changes.                      |
+| SNS/SQS              | On message arrival.                   |
+----------------------------------------------------------------
+
+
+7. Lambda Layers:-
+
+Used to package external dependencies or shared code that can be used across multiple Lambda functions.
+
+Helps in code reuse and keeping functions lightweight.
+
+Example: You can place Python libraries like requests in a Layer instead of bundling them in every Lambda.
+
+
+8. Environment Variables:-
+
+You can pass configuration values (like DB credentials, bucket names, etc.) using environment variables.
+
+These can be encrypted using AWS KMS (for secure storage).
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Real-Time Example:-
+------------------
+
+You want to stop EC2 instances every day at 8 PM, and start at 6 AM
+
+Use CloudWatch Event (cron jobs) to trigger a Lambda function.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Common Event Sources
+
+1. Amazon S3 – Run code when a file is uploaded.
+
+2. Amazon SNS/SQS – React to notifications or messages.
+
+3. Amazon CloudWatch Events – Run on a schedule (cron).
+
+4. API Gateway – Run code when an HTTP request hits your API.
+
+5. DynamoDB Streams – Process changes in a DynamoDB table.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+

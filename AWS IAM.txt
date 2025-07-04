@@ -1,0 +1,67 @@
+AWS IAM:- (Identity and Access Management)
+------------------------------------------
+
+IAM is the AWS Identity and Access Management Service.
+
+IAM is used to securely control individual and group access to AWS resources.
+
+IAM makes it easy to provide multiple users secure access to AWS resources.
+
+AWS IAM allows you to Create users, groups, and roles. Define permissions using policies, Control who can do what in your AWS account
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Main Components:-
+----------------
+
+1. IAM Users:- Represents an individual person or application.
+
+Has long-term access credentials (username + password or access keys).
+
+
+2. IAM Groups:- A collection of users with shared permissions.
+
+Makes it easy to manage permissions for multiple users (e.g., Dev team, QA team).
+
+
+3. IAM Roles:- Used for services or temporary access.
+
+Assumed by AWS services (like EC2, Lambda) or federated users.
+
+No username or password — trusted entities assume the role.
+
+it is helpful to establish the communication between AWS services like ec2, s3, lambda, DynamoDB, etc..
+
+
+
+4. IAM Policies:- JSON-based documents that define permissions. Attached to Users, Groups, or Roles.
+
+Two types:
+
+AWS Managed Policies (predefined)
+
+Customer Managed Policies (custom)
+
+
+Example:
+
+
+{
+  "Effect": "Allow",
+  "Action": "s3:*",
+  "Resource": "*"
+}
+
+
+
+
+5. Permission Boundaries:- Sets the maximum permissions a role or user can have. Useful in large teams to restrict over-permission.
+
+
+
+6. IAM Policy Simulator:- Tool to test and validate IAM permissions before applying. Helps avoid misconfigurations.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
