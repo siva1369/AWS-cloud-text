@@ -79,6 +79,21 @@ You want to stop EC2 instances every day at 8 PM, and start at 6 AM
 
 Use CloudWatch Event (cron jobs) to trigger a Lambda function.
 
+
+example code:-
+-------------
+
+import boto3
+
+ec2 = boto3.client('ec2')
+
+def lambda_handler(event, context):
+    instance_ids = ['i-0862ab8a9f4734e87']  # Replace with your instance IDs
+    ec2.start_instances(InstanceIds=instance_ids)
+
+# Create a similar Lambda function to stop instances. 
+
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Common Event Sources
